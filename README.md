@@ -1,0 +1,1 @@
+Makes using the consul module easier

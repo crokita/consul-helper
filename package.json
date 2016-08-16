@@ -1,0 +1,23 @@
+{
+  "name": "consuela",
+  "version": "1.0.0",
+  "description": "Makes using the consul module easier",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crokita/consuela.git"
+  },
+  "keywords": [
+    "consul",
+    "consuela"
+  ],
+  "author": "Christopher Rokita",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/crokita/consuela/issues"
+  },
+  "homepage": "https://github.com/crokita/consuela#readme"
+}
