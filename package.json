@@ -1,7 +1,7 @@
 {
-  "name": "consuela",
+  "name": "consul-helper",
   "version": "1.0.0",
-  "description": "Makes using the consul module easier",
+  "description": "Watch service changes and get service information",
   "main": "index.js",
   "scripts": {
     "test": "npm test"
@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/crokita/consuela/issues"
   },
-  "homepage": "https://github.com/crokita/consuela#readme"
+  "homepage": "https://github.com/crokita/consuela#readme",
+  "dependencies": {
+    "consul": "^0.25.0",
+    "functionite": "^1.1.1"
+  }
 }
