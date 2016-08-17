@@ -12,10 +12,10 @@ var consuler = require('consul-helper');
 const serviceName = "service-name";
 
 //check for changes in all services in a datacenter, but return information of one service
-consuela.watchService(serviceName, function (services) {
+consuler.watchService(serviceName, function (services) {
 	console.log(services);
 	//retrieve address and port information of all services of a certain name
-	consuela.getServiceAddresses(serviceName, function (results) {
+	consuler.getServiceAddresses(serviceName, function (results) {
 		if (results.length > 0) {
 			console.log(results);
 		}
