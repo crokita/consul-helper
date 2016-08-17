@@ -1,6 +1,6 @@
 {
   "name": "consul-helper",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Watch service changes and get service information",
   "main": "index.js",
   "scripts": {
