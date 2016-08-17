@@ -1,6 +1,6 @@
 {
   "name": "consul-helper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Watch service changes and get service information",
   "main": "index.js",
   "scripts": {
@@ -8,18 +8,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/crokita/consuela.git"
+    "url": "git+https://github.com/crokita/consul-helper.git"
   },
   "keywords": [
-    "consul",
-    "consuela"
+    "consul"
   ],
   "author": "Christopher Rokita",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/crokita/consuela/issues"
+    "url": "https://github.com/crokita/consul-helper/issues"
   },
-  "homepage": "https://github.com/crokita/consuela#readme",
+  "homepage": "https://github.com/crokita/consul-helper#readme",
   "dependencies": {
     "consul": "^0.25.0",
     "functionite": "^1.1.1"
