@@ -5,6 +5,7 @@ module.exports = function (ip) {
 	consul = require('consul')({host: ip}); //start a consul agent
 	return {
 		watchService: watchService,
+		getAllServices: getAllServices,
 		getServiceAddresses: getServiceAddresses
 	}
 }
@@ -41,6 +42,16 @@ function filterWatches (services, serviceName, callback) {
 		}
 	}
 	callback(filteredServices);
+}
+
+//return all those services objects
+function getAllServices (callback) {
+	functionite()
+	.to(getNodes)
+	.to(getServicesInNodes)
+	.then(function (results) {
+		callback(results[0]);
+	});
 }
 
 //pass in a consul service name and return addresses of all those services
