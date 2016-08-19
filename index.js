@@ -1,9 +1,12 @@
-var consul = require('consul')(); //start a consul agent
+var consul;
 var functionite = require('functionite');
 
-module.exports = {
-	watchService: watchService,
-	getServiceAddresses: getServiceAddresses
+module.exports = function (ip) {
+	consul = require('consul')({host: ip}); //start a consul agent
+	return {
+		watchService: watchService,
+		getServiceAddresses: getServiceAddresses
+	}
 }
 
 //permanently check for updates in a service you specify

@@ -8,7 +8,7 @@ This package is not meant for general use and is used specifically for Manticore
 
 How can you use it? Like this:
 ```
-var consuler = require('consul-helper');
+var consuler = require('consul-helper')("127.0.0.1"); //ip of local consul agent
 const serviceName = "service-name";
 
 //check for changes in all services in a datacenter, but return information of one service
