@@ -4,14 +4,14 @@ var functionite = require('functionite');
 module.exports = function (ip) {
 	consul = require('consul')({host: ip}); //start a consul agent
 	return {
-		watchService: watchService,
+		watchServices: watchServices,
 		getAllServices: getAllServices,
 		getServiceAddresses: getServiceAddresses
 	}
 }
 
-//permanently check for updates in a service you specify
-function watchService (serviceName, callback) {
+//check for updates in a service
+function watchServices (callback) {
 	//set up template object to pass through consul
 	var options = {
 		method: consul.catalog.service.list
@@ -19,11 +19,9 @@ function watchService (serviceName, callback) {
 	let watch = consul.watch(options);
 	watch.on('change', function (services, res) {
 		//everytime a change is detected, get the updated list of services
-		//filter the services so only those with name serviceName are passed back
 		functionite()
-		.to(getNodes)
-		.to(getServicesInNodes)
-		.to(filterWatches, serviceName)
+		.to(getAllServices)
+		.to(setUpHelperFunctions)
 		.then(function (results) {
 			callback(results[0]);
 		});
@@ -32,19 +30,27 @@ function watchService (serviceName, callback) {
 		throw err;
 	});
 
-}
-
-function filterWatches (services, serviceName, callback) {
-	var filteredServices = [];
-	for (let i in services) {
-		if (services[i].Service == serviceName) {
-			filteredServices.push(services[i]);
-		}
+	//add helper functions to the services array such as filtering and ending the watch
+	function setUpHelperFunctions (services, callback) {
+		services.filter = filterWatches;
+		//ends the watch
+		services.end = watch.end;
+		callback(services);
 	}
-	callback(filteredServices);
+
+	//returns only services with the same name as serviceName
+	function filterWatches (serviceName) {
+		var filteredServices = [];
+		for (let i in services) {
+			if (services[i].Service == serviceName) {
+				filteredServices.push(services[i]);
+			}
+		}
+		return filteredServices;
+	}
 }
 
-//return all those services objects
+//return all services found in consul for the database
 function getAllServices (callback) {
 	functionite()
 	.to(getNodes)
@@ -57,8 +63,7 @@ function getAllServices (callback) {
 //pass in a consul service name and return addresses of all those services
 function getServiceAddresses (serviceName, callback) {
 	functionite()
-	.to(getNodes)
-	.to(getServicesInNodes)
+	.to(getAllServices)
 	.to(getAddressesFromService, serviceName)
 	.then(function (results) {
 		callback(results[0]);
