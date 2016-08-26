@@ -32,14 +32,14 @@ function watchServices (callback) {
 
 	//add helper functions to the services array such as filtering and ending the watch
 	function setUpHelperFunctions (services, callback) {
-		services.filter = filterWatches;
+		services.filter = filterWatches.bind(undefined, services);
 		//ends the watch
 		services.end = watch.end;
 		callback(services);
 	}
 
 	//returns only services with the same name as serviceName
-	function filterWatches (serviceName) {
+	function filterWatches (services, serviceName) {
 		var filteredServices = [];
 		for (let i in services) {
 			if (services[i].Service == serviceName) {
