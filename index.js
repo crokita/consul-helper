@@ -56,7 +56,7 @@ function watchServices (callback) {
 function watchKVStore (key, callback) {
 	//set up template object to pass through consul
 	var options = {
-		method: consul.kv.get,
+		method: consul.kv.keys,
 		options: {key: key}
 	}
 	var watch = consul.watch(options);
@@ -72,7 +72,6 @@ function watchKVStore (key, callback) {
 //sets a key/value in the KV store
 function setKeyValue (key, value) {
 	consul.kv.set(key, value, function(err, result) {
-		console.log(result);
 		if (err) throw err;
 	});
 }
