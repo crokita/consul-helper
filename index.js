@@ -53,11 +53,11 @@ function watchServices (callback) {
 }
 
 //check for updates in the KV store
-function watchKVStore (callback) {
+function watchKVStore (key, callback) {
 	//set up template object to pass through consul
 	var options = {
 		method: consul.kv.get,
-		options: {key: "manticore"}
+		options: {key: key}
 	}
 	var watch = consul.watch(options);
 	watch.on('change', function (results, res) {
