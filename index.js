@@ -64,9 +64,8 @@ function watchKVStore (key, callback) {
 		//everytime a change is detected, return the results
 		callback(results);
 	});
-	/*watch.on('error', function (err) {
-		throw err;
-	});*/
+	watch.on('error', function (err) {
+	});
 }
 
 //sets a key/value in the KV store
