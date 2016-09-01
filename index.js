@@ -79,9 +79,7 @@ function setKeyValue (key, value) {
 //gets a value in the KV store
 function getKeyValue (key, result) {
 	consul.kv.get(key, function(err, result) {
-		if (result) {
-			callback(result);
-		}	
+		callback(result);
 	});
 }
 
