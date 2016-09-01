@@ -8,7 +8,8 @@ module.exports = function (ip) {
 		watchKVStore: watchKVStore,
 		getAllServices: getAllServices,
 		getServiceAddresses: getServiceAddresses,
-		setKeyValue: setKeyValue
+		setKeyValue: setKeyValue,
+		getKeyValue: getKeyValue
 	}
 }
 
@@ -72,6 +73,15 @@ function watchKVStore (key, callback) {
 function setKeyValue (key, value) {
 	consul.kv.set(key, value, function(err, result) {
 		if (err) throw err;
+	});
+}
+
+//gets a value in the KV store
+function getKeyValue (key, result) {
+	consul.kv.get(key, function(err, result) {
+		if (result) {
+			callback(result);
+		}	
 	});
 }
 
