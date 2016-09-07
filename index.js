@@ -9,7 +9,8 @@ module.exports = function (ip) {
 		getAllServices: getAllServices,
 		getServiceAddresses: getServiceAddresses,
 		setKeyValue: setKeyValue,
-		getKeyValue: getKeyValue
+		getKeyValue: getKeyValue,
+		delKey: delKey
 	}
 }
 
@@ -80,6 +81,13 @@ function setKeyValue (key, value) {
 function getKeyValue (key, callback) {
 	consul.kv.get(key, function (err, result) {
 		callback(result);
+	});
+}
+
+//deletes a key in the KV store
+function delKey (key, callback) {
+	consul.kv.del(key, function (err) {
+		callback();
 	});
 }
 
