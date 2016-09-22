@@ -8,21 +8,14 @@ This package is not meant for general use and is used specifically for Manticore
 
 How can you use it? Like this:
 ```
-var consuler = require('consul-helper')("127.0.0.1"); //ip of local consul agent
-const serviceName = "service-name";
+//set up a watch for all services
+var consuler = require('consul-helper')("127.0.0.1"); //ip that local consul agent binds to
 
-//check for changes in all services in a datacenter, but return information of one service
-consuler.watchService(serviceName, function (services) {
-	console.log(services);
-	//retrieve address and port information of all services of a certain name
-	consuler.getServiceAddresses(serviceName, function (results) {
-		if (results.length > 0) {
-			console.log(results);
-		}
-		else {
-			console.log("No servers found");
-		}
-	});
+//get a list of all services in the datacenter whenever a change in services is detected
+consuler.watchServices(function (services) {
+	//services updated. filter the information to a specific service
+	let examples = services.filter("example-service");
+	//now look through all the example-service services' information...
 });
 
 ```
