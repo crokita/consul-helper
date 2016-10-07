@@ -72,9 +72,12 @@ function watchKVStore (key, callback) {
 }
 
 //sets a key/value in the KV store
-function setKeyValue (key, value) {
+function setKeyValue (key, value, callback) {
 	consul.kv.set(key, value, function(err, result) {
 		if (err) throw err;
+		if (callback) {
+			callback();
+		}
 	});
 }
 
