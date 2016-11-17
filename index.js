@@ -11,7 +11,8 @@ module.exports = function (ip) {
 		setKeyValue: setKeyValue,
 		getKeyValue: getKeyValue,
 		getKeyAll: getKeyAll,
-		delKey: delKey
+		delKey: delKey,
+		delKeyAll: delKeyAll
 	}
 }
 
@@ -102,6 +103,17 @@ function getKeyAll (key, callback) {
 //deletes a key in the KV store
 function delKey (key, callback) {
 	consul.kv.del(key, function (err) {
+		callback();
+	});
+}
+
+//deletes all keys under a key in the KV store
+function delKeyAll (key, callback) {
+	const opts =  {
+		key: key,
+		recurse: true
+	}
+	consul.kv.del(opts, function (err) {
 		callback();
 	});
 }
