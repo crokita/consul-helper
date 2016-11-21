@@ -12,7 +12,8 @@ module.exports = function (ip) {
 		getKeyValue: getKeyValue,
 		getKeyAll: getKeyAll,
 		delKey: delKey,
-		delKeyAll: delKeyAll
+		delKeyAll: delKeyAll,
+		lock:lock
 	}
 }
 
@@ -116,6 +117,10 @@ function delKeyAll (key, callback) {
 	consul.kv.del(opts, function (err) {
 		callback();
 	});
+}
+
+function lock (key) {
+	return consul.lock({key: key});
 }
 
 //return all services found in consul for the database
