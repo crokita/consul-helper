@@ -5,6 +5,7 @@ module.exports = function (ip) {
 	consul = require('consul')({host: ip}); //start a consul agent
 	return {
 		watchServices: watchServices,
+		watchServiceStatus: watchServiceStatus,
 		watchKVStore: watchKVStore,
 		getAllServices: getAllServices,
 		getServiceAddresses: getServiceAddresses,
@@ -55,6 +56,24 @@ function watchServices (callback) {
 		}
 		return filteredServices;
 	}
+}
+
+//sets up a health check for services of a certain name
+//meant to replace the watchServices function
+function watchServiceStatus (serviceName, callback) {
+	var options = {
+	    method: consul.health.service,
+	    options: {service: serviceName}
+	}
+
+	var watch = consul.watch(options);
+	watch.on('change', function (services, res) {
+	    //everytime a change is detected, get the updated list of services
+	    callback(services);
+	});
+	watch.on('error', function (err) {
+	    throw err;
+	});
 }
 
 //check for updates in the KV store
