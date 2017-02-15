@@ -27,7 +27,7 @@ function watchAllServices (callback) {
 	}
 	var watch = consul.watch(options);
 	watch.on('change', function (services, res) {
-		callback(results);
+		callback(services);
 	});
 	watch.on('error', function (err) {
 		throw err;
