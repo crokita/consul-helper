@@ -74,6 +74,7 @@ function watchServiceStatus (serviceName, callback) {
 	watch.on('error', function (err) {
 	    throw err;
 	});
+	return watch; //return the watch object
 }
 
 //check for updates in the KV store
