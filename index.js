@@ -9,6 +9,7 @@ module.exports = function (ip) {
 		watchServiceStatus: watchServiceStatus,
 		watchKVStore: watchKVStore,
 		getAllServices: getAllServices,
+		getService: getService,
 		getServiceAddresses: getServiceAddresses,
 		setKeyValue: setKeyValue,
 		getKeyValue: getKeyValue,
@@ -169,6 +170,15 @@ function getAllServices (callback) {
 		callback(results[0]);
 	});
 }
+
+//return one service
+function getService (serviceName, callback) {
+	consul.health.service(serviceName, function (err, result) {
+		callback(result);
+	});
+}
+
+
 
 //pass in a consul service name and return addresses of all those services
 function getServiceAddresses (serviceName, callback) {
