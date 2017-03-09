@@ -4,6 +4,7 @@ var functionite = require('functionite');
 module.exports = function (ip) {
 	consul = require('consul')({host: ip}); //start a consul agent
 	return {
+		getSetCheck: getSetCheck,
 		watchServices: watchServices,
 		watchAllServices: watchAllServices,
 		watchServiceStatus: watchServiceStatus,
@@ -17,6 +18,30 @@ module.exports = function (ip) {
 		delKey: delKey,
 		delKeyAll: delKeyAll,
 		lock:lock
+	}
+}
+
+//abstracts away the implementation of getting a key and then altering the data in the remote store
+//at a later time, while still ensuring noone else has altered the store within that time frame
+//eventually returns whether the set operation was successful (boolean)
+function getSetCheck (key, callback) {
+	var modIndex;
+	consul.kv.get(key, function (err, res) {
+		if (res) {
+			modIndex = res.ModifyIndex;
+		}
+		callback(res, setter);
+	});
+
+	function setter (value, innerCallback) {
+		var options = {
+			key: key,
+			value: value,
+			cas: modIndex
+		}
+		consul.kv.set(options, function (err, res) {
+			innerCallback(res);
+		});
 	}
 }
 
