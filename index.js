@@ -140,7 +140,7 @@ function watchKVStore (key, callback) {
 function setKeyValue (key, value, callback) {
 	var options = {
 		key: key,
-		value: value
+		value: ""+value //coerce to string
 	}
 	consul.kv.set(options, function(err, result) {
 		if (err) throw err;
