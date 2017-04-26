@@ -1,6 +1,6 @@
 {
   "name": "consul-helper",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Watch service changes and get service information",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/crokita/consul-helper#readme",
   "dependencies": {
     "consul": "^0.25.0",
-    "functionite": "^1.1.1"
+    "functionite": "^1.1.1",
+    "needle": "^1.6.0"
   }
 }

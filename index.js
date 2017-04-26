@@ -1,8 +1,11 @@
 var consul;
 var functionite = require('functionite');
+var needle = require('needle');
+var agentIp;
 
 module.exports = function (ip) {
 	consul = require('consul')({host: ip}); //start a consul agent
+	agentIp = ip;
 	return {
 		getSetCheck: getSetCheck,
 		watchServices: watchServices,
@@ -17,7 +20,8 @@ module.exports = function (ip) {
 		getKeyAll: getKeyAll,
 		delKey: delKey,
 		delKeyAll: delKeyAll,
-		lock:lock
+		lock: lock,
+		atomicUpdate: atomicUpdate
 	}
 }
 
@@ -188,6 +192,32 @@ function delKeyAll (key, callback) {
 
 function lock (key) {
 	return consul.lock({key: key});
+}
+
+//performs a basic atomatic update, auto encoding values and setting up the correct
+//response structure for sending to the local agent
+//up to 64 elements are allowed in a single transaction!
+function atomicUpdate () {
+	var payload = [];
+	return {
+		add: function (verb, key, value) {
+			var action = {
+				"KV": {
+				}
+			}
+			action.KV.Verb = verb;
+			action.KV.Key = key;
+			if (value) {
+				action.KV.Value = Buffer.from(value).toString("base64");
+			}
+			payload.push(action);
+		},
+		submit: function (callback) {
+			needle.put('http://' + agentIp + '/v1/txn', payload, function (err, res) {
+				callback(err, res.body);
+			});
+		}
+	}
 }
 
 //return all services found in consul for the database
