@@ -213,7 +213,7 @@ function atomicUpdate () {
 			payload.push(action);
 		},
 		submit: function (callback) {
-			needle.put('http://' + agentIp + '/v1/txn', payload, function (err, res) {
+			needle.put('http://' + agentIp + ':8500/v1/txn', payload, function (err, res) {
 				callback(err, res.body);
 			});
 		}
