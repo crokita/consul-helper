@@ -31,7 +31,7 @@ module.exports = function (ip) {
 function getSetCheck (key, callback) {
 	var modIndex;
 	consul.kv.get(key, function (err, res) {
-		if (!err) {
+		if (res) {
 			modIndex = res.ModifyIndex;
 		}
 		callback(res, setter);
